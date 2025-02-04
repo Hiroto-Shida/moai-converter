@@ -1,0 +1,39 @@
+name: check build
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    branches:
+      - main
+
+# 同時実行対策
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5 # タイムアウト時間を定義
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+
+      # Node.jsのセットアップ
+      - uses: actions/setup-node@v4
+        with:
+          # volta.nodeを参照
+          node-version-file: package.json
+
+      # mainの npm install
+      - name: node moduleのインストール
+        run: npm ci
+
+      # vite build
+      - name: vite の build
+        run: npm run build
