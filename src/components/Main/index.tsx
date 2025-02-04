@@ -5,6 +5,7 @@ const Main: FC = () => {
   return (
     <div>
       <h1 className="text-center text-2xl">Hello, Moai!</h1>
+      <p>test</p>
       <img src={moaiLogo} className="w-[100px]" alt="moai logo" />
     </div>
   );
