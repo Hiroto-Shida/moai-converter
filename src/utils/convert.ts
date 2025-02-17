@@ -36,34 +36,67 @@ export const isCorrectCodePoint = (codePoint: number) => {
  * @param {string} inputOrigin 元の言語
  * @returns {string} モアイ語
  */
-export const originToMoaiLang = (inputOrigin: string) => {
+export const originToMoaiLang = (
+  inputOrigin: string,
+): {
+  moai: string;
+  dividedMoai: string[];
+  isStartMoai: boolean;
+} => {
   if (!inputOrigin) {
-    return "";
+    return {
+      moai: "",
+      dividedMoai: [],
+      isStartMoai: false,
+    };
   }
 
   // サロゲートペアも考慮して1文字ずつ分割(splitではダメ)
-  const originList = inputOrigin.match(/./gu);
+  const originList = inputOrigin.match(/[\s\S]/gu);
   if (!originList) {
-    return "";
+    return {
+      moai: "",
+      dividedMoai: [],
+      isStartMoai: false,
+    };
   }
 
-  return originList
-    .map((char) => {
-      const isSpecial = char.match(SPECIAL_CHARACTERS_REGEXP);
-      const code = char.codePointAt(0);
+  const dividedMoaiInfo: { text: string; isMoai: boolean }[] = [];
+  let moai = "";
 
-      // 記号やunicodeに存在しない文字(?)はそのまま返す
-      if (isSpecial || code === undefined) {
-        return char;
-      }
+  // dividedMoaiInfo に textを追加する関数
+  const textSetter = (text: string, isMoai: boolean) => {
+    // 前が同じ(モアイ語or非モアイ語)場合は連結
+    if (dividedMoaiInfo[dividedMoaiInfo.length - 1]?.isMoai === isMoai) {
+      dividedMoaiInfo[dividedMoaiInfo.length - 1].text += text;
+    } else {
+      dividedMoaiInfo.push({ text, isMoai });
+    }
+  };
 
-      const array = code.toString(16).split("") as Array<
-        keyof typeof MOAI_CODE
-      >;
+  originList.forEach((char) => {
+    const isSpecial = char.match(SPECIAL_CHARACTERS_REGEXP);
+    const code = char.codePointAt(0);
 
-      return "モ" + array.map((code) => MOAI_CODE[code]).join("");
-    })
-    .join("");
+    // 記号やunicodeに存在しない文字(?)はそのまま返す
+    if (isSpecial || code === undefined) {
+      moai += char;
+      textSetter(char, false);
+      return;
+    }
+
+    const array = code.toString(16).split("") as Array<keyof typeof MOAI_CODE>;
+
+    const parsedMoai = "モ" + array.map((code) => MOAI_CODE[code]).join("");
+    moai += parsedMoai;
+    textSetter(parsedMoai, true);
+  });
+
+  return {
+    moai,
+    dividedMoai: dividedMoaiInfo.map((info) => info.text),
+    isStartMoai: dividedMoaiInfo[0].isMoai,
+  };
 };
 
 /**

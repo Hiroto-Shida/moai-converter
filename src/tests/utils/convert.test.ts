@@ -5,6 +5,8 @@ import {
   originToMoaiLang,
 } from "../../utils/convert";
 
+// TODO: 結合文字のテストを追加する（ｶﾞなど）
+
 describe("isCorrectCodePoint", () => {
   describe("正常系", () => {
     test("制御文字のコードポイントの場合", () => {
@@ -27,24 +29,44 @@ describe("任意の言語 → モアイ語翻訳 originToMoaiLang", () => {
     describe("1文字の場合", () => {
       test("通常文字", () => {
         // "a".codePointAt(0).toString(16) は "61"
-        expect(originToMoaiLang("a")).toBe("モﾓｱァ");
+        expect(originToMoaiLang("a")).toStrictEqual({
+          moai: "モﾓｱァ",
+          dividedMoai: ["モﾓｱァ"],
+          isStartMoai: true,
+        });
       });
 
       test("数字の場合", () => {
-        expect(originToMoaiLang("1")).toBe("1");
+        expect(originToMoaiLang("1")).toStrictEqual({
+          moai: "1",
+          dividedMoai: ["1"],
+          isStartMoai: false,
+        });
       });
 
       test("記号の場合", () => {
-        expect(originToMoaiLang("!")).toBe("!");
+        expect(originToMoaiLang("!")).toStrictEqual({
+          moai: "!",
+          dividedMoai: ["!"],
+          isStartMoai: false,
+        });
       });
 
       test("スペースの場合", () => {
-        expect(originToMoaiLang(" ")).toBe(" ");
+        expect(originToMoaiLang(" ")).toStrictEqual({
+          moai: " ",
+          dividedMoai: [" "],
+          isStartMoai: false,
+        });
       });
 
       test("サロゲートペアの場合", () => {
         // "𠮷".codePointAt(0).toString(16) は "20bb7"
-        expect(originToMoaiLang("𠮷")).toBe("モイアｨｨﾓｲ");
+        expect(originToMoaiLang("𠮷")).toStrictEqual({
+          moai: "モイアｨｨﾓｲ",
+          dividedMoai: ["モイアｨｨﾓｲ"],
+          isStartMoai: true,
+        });
       });
     });
 
@@ -52,31 +74,76 @@ describe("任意の言語 → モアイ語翻訳 originToMoaiLang", () => {
       test("通常文字 の連続の場合", () => {
         // "a".codePointAt(0).toString(16) は "61"
         // "b".codePointAt(0).toString(16) は "62"
-        expect(originToMoaiLang("ab")).toBe("モﾓｱァモﾓｱイ");
+        expect(originToMoaiLang("ab")).toStrictEqual({
+          moai: "モﾓｱァモﾓｱイ",
+          dividedMoai: ["モﾓｱァモﾓｱイ"],
+          isStartMoai: true,
+        });
       });
 
       test("記号 の連続の場合", () => {
-        expect(originToMoaiLang("!ー＄％")).toBe("!ー＄％");
+        expect(originToMoaiLang("!ー＄％")).toStrictEqual({
+          moai: "!ー＄％",
+          dividedMoai: ["!ー＄％"],
+          isStartMoai: false,
+        });
       });
 
       test("通常文字 + 記号 の場合", () => {
-        expect(originToMoaiLang("aー")).toBe("モﾓｱァー");
+        expect(originToMoaiLang("aー")).toStrictEqual({
+          moai: "モﾓｱァー",
+          dividedMoai: ["モﾓｱァ", "ー"],
+          isStartMoai: true,
+        });
       });
 
       test("記号 + 通常文字 の場合", () => {
-        expect(originToMoaiLang("ーa")).toBe("ーモﾓｱァ");
+        expect(originToMoaiLang("ーa")).toStrictEqual({
+          moai: "ーモﾓｱァ",
+          dividedMoai: ["ー", "モﾓｱァ"],
+          isStartMoai: false,
+        });
       });
 
       test("通常文字 + 記号 + 通常文字 の場合", () => {
-        expect(originToMoaiLang("aーa")).toBe("モﾓｱァーモﾓｱァ");
+        expect(originToMoaiLang("aーa")).toStrictEqual({
+          moai: "モﾓｱァーモﾓｱァ",
+          dividedMoai: ["モﾓｱァ", "ー", "モﾓｱァ"],
+          isStartMoai: true,
+        });
       });
 
       test("記号 + 通常文字 + 記号 の場合", () => {
-        expect(originToMoaiLang("ーaー")).toBe("ーモﾓｱァー");
+        expect(originToMoaiLang("ーaー")).toStrictEqual({
+          moai: "ーモﾓｱァー",
+          dividedMoai: ["ー", "モﾓｱァ", "ー"],
+          isStartMoai: false,
+        });
       });
 
       test("ごちゃ混ぜ(通常文字 + 記号 + スペース + サロゲートペア)の場合", () => {
-        expect(originToMoaiLang("aー 𠮷a")).toBe("モﾓｱァー モイアｨｨﾓｲモﾓｱァ");
+        expect(originToMoaiLang("aー 𠮷a")).toStrictEqual({
+          moai: "モﾓｱァー モイアｨｨﾓｲモﾓｱァ",
+          dividedMoai: ["モﾓｱァ", "ー ", "モイアｨｨﾓｲモﾓｱァ"],
+          isStartMoai: true,
+        });
+      });
+    });
+  });
+
+  describe("準正常系", () => {
+    test("結合文字のみの場合", () => {
+      expect(originToMoaiLang("ｶﾞ")).toStrictEqual({
+        moai: "モﾓｨﾓｨﾓｲﾓｱモﾓｨﾓｨｧﾓｧ",
+        dividedMoai: ["モﾓｨﾓｨﾓｲﾓｱモﾓｨﾓｨｧﾓｧ"],
+        isStartMoai: true,
+      });
+    });
+    test("結文字を含む文字列の場合", () => {
+      expect(originToMoaiLang("-ｶﾞa")).toStrictEqual({
+        moai: "-モﾓｨﾓｨﾓｲﾓｱモﾓｨﾓｨｧﾓｧモﾓｱァ",
+        dividedMoai: ["-", "モﾓｨﾓｨﾓｲﾓｱモﾓｨﾓｨｧﾓｧモﾓｱァ"],
+        isStartMoai: false,
       });
     });
   });
