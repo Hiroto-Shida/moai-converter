@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.textarea {
+  scrollbar-color: var(--color-primary) transparent;
+}
+
+.display {
+  scrollbar-color: var(--color-primary) transparent;
+}
