@@ -1,0 +1,18 @@
+{
+  "eslint.useFlatConfig": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit",
+    "source.addMissingImports": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#04bf78",
+    "activityBar.activeBorder": "#FFFFFF",
+    "activityBar.background": "#04bf78",
+    "activityBar.foreground": "#FFFFFF",
+    "activityBar.inactiveForeground": "#EBECF299",
+    "activityBarBadge.background": "#FFFFFF",
+    "activityBarBadge.foreground": "#15202b"
+  }
+}
