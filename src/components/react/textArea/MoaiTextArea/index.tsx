@@ -172,6 +172,16 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
           </div>
         </div>
       </div>
+      {(moaiInfo.dividedMoai.length >= 2 ||
+        (moaiInfo.dividedMoai.length === 1 && !moaiInfo.isStartMoai)) && (
+        <div className="text-error mt-1 flex">
+          <div>※</div>
+          <p className="ml-[2px]">
+            Non-Moai Language (including some special characters) will not be
+            converted.
+          </p>
+        </div>
+      )}
     </div>
   );
 };
