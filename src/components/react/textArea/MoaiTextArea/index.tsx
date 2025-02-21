@@ -161,7 +161,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
             <span
               className={
                 textareaRef.current &&
-                textareaRef.current.value.length === maxLength
+                textareaRef.current.value.length >= maxLength
                   ? "text-error"
                   : ""
               }

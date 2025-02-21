@@ -86,7 +86,7 @@ const OriginTextArea: React.FC<OriginTextAreaProps> = ({
             <span
               className={
                 textareaRef.current &&
-                textareaRef.current.value.length === maxLength
+                textareaRef.current.value.length >= maxLength
                   ? "text-error"
                   : ""
               }
