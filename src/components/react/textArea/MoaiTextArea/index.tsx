@@ -1,6 +1,7 @@
 import AudioButton from "@assets/audio.svg";
 import ClearButton from "@assets/clear.svg";
 import CopyButton from "@assets/copy.svg";
+import MoaiStroke from "@assets/moai-stroke-white.svg";
 import ToolTipButton from "@components/react/ToolTipButton";
 import { moaiLangToOrigin } from "@utils/convert";
 import clsx from "clsx";
@@ -112,6 +113,11 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
         {label}
       </label>
       <div className="bg-secondary relative mt-1 flex h-[150px] flex-col rounded-[8px] has-focus-within:outline-2 has-focus-within:outline-black">
+        <img
+          src={MoaiStroke.src}
+          alt=""
+          className="absolute top-0 right-[28px] z-0 h-full"
+        />
         <textarea
           id={`moai_textarea`}
           ref={textareaRef}
@@ -121,7 +127,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
           className={clsx(
             styles.textarea,
             "placeholder:text-gray absolute h-[110px] w-[calc(100%-1px)] flex-1 resize-none p-2 pr-[20px] break-words whitespace-pre-wrap focus:outline-none",
-            "bg-transparent text-transparent caret-black",
+            "z-2 bg-transparent text-transparent caret-black",
           )}
           value={value}
         />
@@ -129,7 +135,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
           ref={displayAreaRef}
           className={clsx(
             styles.display,
-            "box-border h-[110px] w-[calc(100%-1px)] overflow-y-scroll p-2 pr-[20px] break-words whitespace-pre-wrap",
+            "z-1 box-border h-[110px] w-[calc(100%-1px)] overflow-y-scroll p-2 pr-[20px] break-words whitespace-pre-wrap",
           )}
         >
           {styledMoaiLang}
@@ -137,10 +143,10 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
         <img
           src={ClearButton.src}
           alt=""
-          className="absolute top-2 right-2 cursor-pointer"
+          className="absolute top-2 right-2 z-2 cursor-pointer"
           onClick={handleClear}
         />
-        <div className="my-2 flex h-[24px] items-center gap-4 px-2">
+        <div className="z-2 my-2 flex h-[24px] items-center gap-4 px-2">
           <ToolTipButton text="Audio Play" onClick={handleAudioPlay}>
             <img src={AudioButton.src} alt="" className="size-[20px]" />
           </ToolTipButton>
@@ -155,7 +161,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
             <span
               className={
                 textareaRef.current &&
-                textareaRef.current.value.length === maxLength
+                textareaRef.current.value.length >= maxLength
                   ? "text-error"
                   : ""
               }
@@ -166,6 +172,16 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
           </div>
         </div>
       </div>
+      {(moaiInfo.dividedMoai.length >= 2 ||
+        (moaiInfo.dividedMoai.length === 1 && !moaiInfo.isStartMoai)) && (
+        <div className="text-error mt-1 flex">
+          <div>※</div>
+          <p className="ml-[2px]">
+            Non-Moai Language (including some special characters) will not be
+            converted.
+          </p>
+        </div>
+      )}
     </div>
   );
 };
