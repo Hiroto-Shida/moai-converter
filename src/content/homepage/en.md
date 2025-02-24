@@ -1,4 +1,7 @@
 ---
+meta:
+  title: 'Moai Converter'
+  description: 'Converts any language into Moai-Language'
 title: 'Moai Converter'
 languageMenu:
   english: 'English'
