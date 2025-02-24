@@ -61,7 +61,7 @@ const OriginTextArea: React.FC<OriginTextAreaProps> = ({
           maxLength={maxLength}
           className={clsx(
             styles.textarea,
-            'placeholder:text-gray h-[110px] w-[calc(100%-1px)] resize-none p-2 pr-[20px] focus:outline-none',
+            'placeholder:text-gray h-[110px] w-[calc(100%-1px)] resize-none p-2 pr-[28px] focus:outline-none',
           )}
           value={value}
         />
