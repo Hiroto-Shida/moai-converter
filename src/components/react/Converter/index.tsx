@@ -1,29 +1,29 @@
-import { moaiLangToOrigin, originToMoaiLang } from "@utils/convert";
-import React, { useRef, useState } from "react";
-import MoaiTextArea from "../textArea/MoaiTextArea";
-import OriginTextArea from "../textArea/OriginTextArea";
+import { moaiLangToOrigin, originToMoaiLang } from '@utils/convert';
+import React, { useRef, useState } from 'react';
+import MoaiTextArea from '../textArea/MoaiTextArea';
+import OriginTextArea from '../textArea/OriginTextArea';
 
 const Converter: React.FC = () => {
   const originTextAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const moaiTextAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const displayAreaRef = useRef<HTMLDivElement | null>(null);
-  const [originValue, setOriginValue] = useState<string>("");
-  const [moaiValue, setMoaiValue] = useState<string>("");
+  const [originValue, setOriginValue] = useState<string>('');
+  const [moaiValue, setMoaiValue] = useState<string>('');
 
   const [moaiInfo, setMoaiInfo] = useState<
-    Omit<ReturnType<typeof moaiLangToOrigin>, "origin">
+    Omit<ReturnType<typeof moaiLangToOrigin>, 'origin'>
   >({
     dividedMoai: [],
     isStartMoai: false,
   });
 
-  const handleScroll = (target: "origin" | "moai") => {
+  const handleScroll = (target: 'origin' | 'moai') => {
     const scrollTop =
-      target === "origin"
+      target === 'origin'
         ? moaiTextAreaRef.current?.scrollTop
         : originTextAreaRef.current?.scrollTop;
     const targetRef =
-      target === "origin" ? originTextAreaRef.current : moaiTextAreaRef.current;
+      target === 'origin' ? originTextAreaRef.current : moaiTextAreaRef.current;
     if (targetRef) {
       targetRef.scrollTo({ top: scrollTop });
     }
@@ -32,10 +32,10 @@ const Converter: React.FC = () => {
   // TODO: 反映箇所がわかるようなcssを付け加える
   const handleChange = (
     value: string,
-    target: "origin" | "moai",
+    target: 'origin' | 'moai',
     fromClear?: boolean,
   ) => {
-    if (target === "origin") {
+    if (target === 'origin') {
       if (!fromClear) {
         const moaiInfo = originToMoaiLang(value);
         setMoaiValue(moaiInfo.moai);
@@ -43,14 +43,14 @@ const Converter: React.FC = () => {
           dividedMoai: moaiInfo.dividedMoai,
           isStartMoai: moaiInfo.isStartMoai,
         });
-        handleScroll("moai");
+        handleScroll('moai');
       }
       setOriginValue(value);
     } else {
       const originInfo = moaiLangToOrigin(value);
       if (!fromClear) {
         setOriginValue(originInfo.origin);
-        handleScroll("origin");
+        handleScroll('origin');
       }
       setMoaiValue(value);
       setMoaiInfo({
@@ -69,7 +69,7 @@ const Converter: React.FC = () => {
         placeholder="hello"
         maxLength={200}
         handleChange={(value, fromClear) =>
-          handleChange(value, "origin", fromClear)
+          handleChange(value, 'origin', fromClear)
         }
       />
       <MoaiTextArea
@@ -79,7 +79,7 @@ const Converter: React.FC = () => {
         placeholder="モﾓｱｱモﾓｱォモﾓｱｵモﾓｱｵモﾓｱﾓｨ"
         maxLength={1000}
         handleChange={(value, fromClear) =>
-          handleChange(value, "moai", fromClear)
+          handleChange(value, 'moai', fromClear)
         }
         displayAreaRef={displayAreaRef}
         moaiInfo={moaiInfo}

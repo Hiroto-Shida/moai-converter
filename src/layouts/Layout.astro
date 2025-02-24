@@ -1,28 +1,31 @@
 ---
-import "../styles/global.css";
+import Footer from '@components/Footer/Footer.astro';
+import '../styles/global.css';
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<!-- TODO: favicon設定 -->
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Moai Converter</title>
-	</head>
-	<body class="bg-primary p-6 text-black text-base">
-		<main>
-			<slot />
-		</main>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!-- TODO: favicon設定 -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Moai Converter</title>
+  </head>
+  <body class="bg-primary flex min-h-dvh flex-col p-6 text-base text-black">
+    <main>
+      <slot />
+    </main>
+    <div class="flex-grow"></div>
+    <Footer />
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		font-family: 'Noto Sans', sans-serif;
-	}
+  html,
+  body {
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+  }
 </style>
