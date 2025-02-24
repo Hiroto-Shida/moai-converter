@@ -89,10 +89,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
         );
       }
       return (
-        <span
-          key={index}
-          className="text-error bg-errorBG break-words whitespace-pre-wrap"
-        >
+        <span key={index} className="bg-error break-words whitespace-pre-wrap">
           {element}
         </span>
       );
@@ -176,14 +173,14 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
       </div>
       {(moaiInfo.dividedMoai.length >= 2 ||
         (moaiInfo.dividedMoai.length === 1 && !moaiInfo.isStartMoai)) && (
-        <div className="text-error mt-1 flex">
+        <div className="mt-1 flex">
           <div>※</div>
           <p className="ml-[2px]">
             {content.textarea.error
               .split(',')
               .map((text, i) =>
                 i === 0 ? (
-                  <span className="bg-errorBG">{text}</span>
+                  <span className="bg-error">{text}</span>
                 ) : (
                   <span>{text}</span>
                 ),
