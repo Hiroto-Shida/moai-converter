@@ -1,12 +1,12 @@
-import AudioButton from "@assets/audio.svg";
-import ClearButton from "@assets/clear.svg";
-import CopyButton from "@assets/copy.svg";
-import MoaiStroke from "@assets/moai-stroke-white.svg";
-import ToolTipButton from "@components/react/ToolTipButton";
-import { moaiLangToOrigin } from "@utils/convert";
-import clsx from "clsx";
-import React, { useEffect, useMemo, useState } from "react";
-import styles from "../TextArea.module.css";
+import AudioButton from '@assets/audio.svg';
+import ClearButton from '@assets/clear.svg';
+import CopyButton from '@assets/copy.svg';
+import MoaiStroke from '@assets/moai-stroke-white.svg';
+import ToolTipButton from '@components/react/ToolTipButton';
+import { moaiLangToOrigin } from '@utils/convert';
+import clsx from 'clsx';
+import React, { useEffect, useMemo, useState } from 'react';
+import styles from '../TextArea.module.css';
 
 type MoaiTextAreaProps = {
   value: string;
@@ -16,7 +16,7 @@ type MoaiTextAreaProps = {
   maxLength: number;
   handleChange: (value: string, fromClear?: boolean) => void;
   displayAreaRef: React.RefObject<HTMLDivElement | null>;
-  moaiInfo: Omit<ReturnType<typeof moaiLangToOrigin>, "origin">;
+  moaiInfo: Omit<ReturnType<typeof moaiLangToOrigin>, 'origin'>;
 };
 
 const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
@@ -32,23 +32,23 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
   const [count, setCount] = useState(0);
 
   const handleClear = () => {
-    if (textareaRef.current) textareaRef.current.value = "";
-    handleChange("", true);
+    if (textareaRef.current) textareaRef.current.value = '';
+    handleChange('', true);
     setCount(0);
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(textareaRef.current?.value || "");
+    navigator.clipboard.writeText(textareaRef.current?.value || '');
   };
 
   const handleAudioPlay = () => {
     if (!textareaRef.current?.value) return;
 
     // 確認ダイアログを表示して音声を再生するか確認する
-    if (!window.confirm("play audio?")) return;
+    if (!window.confirm('play audio?')) return;
 
     const utterance = new SpeechSynthesisUtterance(textareaRef.current.value);
-    utterance.lang = "ja-JP";
+    utterance.lang = 'ja-JP';
     utterance.pitch = 0.8;
     window.speechSynthesis.speak(utterance);
   };
@@ -64,16 +64,16 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
           displayAreaElement.scrollTo({ top: scrollTop });
         }
       };
-      textMoaiElement.addEventListener("scroll", handleScrollDisplay);
+      textMoaiElement.addEventListener('scroll', handleScrollDisplay);
       return () => {
-        textMoaiElement.removeEventListener("scroll", handleScrollDisplay);
+        textMoaiElement.removeEventListener('scroll', handleScrollDisplay);
       };
     }
   }, []);
 
   const styledMoaiLang = useMemo(() => {
     return moaiInfo.dividedMoai.map((text, index) => {
-      const splitText = text.split("\n");
+      const splitText = text.split('\n');
       const element = splitText.map((t, i) => (
         <React.Fragment key={i}>
           {i !== 0 && <br />}
@@ -126,8 +126,8 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
           maxLength={maxLength}
           className={clsx(
             styles.textarea,
-            "placeholder:text-gray absolute h-[110px] w-[calc(100%-1px)] flex-1 resize-none p-2 pr-[20px] break-words whitespace-pre-wrap focus:outline-none",
-            "z-2 bg-transparent text-transparent caret-black",
+            'placeholder:text-gray absolute h-[110px] w-[calc(100%-1px)] flex-1 resize-none p-2 pr-[20px] break-words whitespace-pre-wrap focus:outline-none',
+            'z-2 bg-transparent text-transparent caret-black',
           )}
           value={value}
         />
@@ -135,7 +135,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
           ref={displayAreaRef}
           className={clsx(
             styles.display,
-            "z-1 box-border h-[110px] w-[calc(100%-1px)] overflow-y-scroll p-2 pr-[20px] break-words whitespace-pre-wrap",
+            'z-1 box-border h-[110px] w-[calc(100%-1px)] overflow-y-scroll p-2 pr-[20px] break-words whitespace-pre-wrap',
           )}
         >
           {styledMoaiLang}
@@ -162,8 +162,8 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
               className={
                 textareaRef.current &&
                 textareaRef.current.value.length >= maxLength
-                  ? "text-error"
-                  : ""
+                  ? 'text-error'
+                  : ''
               }
             >
               {count}

@@ -1,4 +1,4 @@
-import GlobalIcon from "@assets/global.svg";
+import GlobalIcon from '@assets/global.svg';
 
 const LanguageMenu: React.FC = () => {
   return (

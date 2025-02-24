@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import { useState } from "react";
-import { useDebounce } from "src/hooks/useDebounce";
+import clsx from 'clsx';
+import { useState } from 'react';
+import { useDebounce } from 'src/hooks/useDebounce';
 
 type ToolTipButtonProps = {
   children: React.ReactNode;
@@ -13,11 +13,11 @@ type ToolTipButtonProps = {
 
 const ToolTipButton: React.FC<ToolTipButtonProps> = ({
   children,
-  text = "",
+  text = '',
   onClick = () => {},
   clickedText,
   disabled = false,
-  className = "",
+  className = '',
 }) => {
   const [isClicked, setIsClicked] = useState(false);
   const debounce = useDebounce(1000);
@@ -26,8 +26,8 @@ const ToolTipButton: React.FC<ToolTipButtonProps> = ({
     <div
       className={
         disabled
-          ? "cursor-not-allowed opacity-25"
-          : "group relative cursor-pointer"
+          ? 'cursor-not-allowed opacity-25'
+          : 'group relative cursor-pointer'
       }
     >
       {/* Button */}
@@ -39,7 +39,7 @@ const ToolTipButton: React.FC<ToolTipButtonProps> = ({
           debounce(() => setIsClicked(false));
         }}
         className={clsx(
-          "relative z-1 group-hover:block",
+          'relative z-1 group-hover:block',
           "group-hover:before:bg-gray before:absolute before:top-[50%] before:left-[50%] before:z-[-1] before:size-[30px] before:translate-[-50%] before:rounded-[50%] before:bg-inherit before:opacity-30 before:duration-200 before:ease-in-out before:content-['']",
           className,
         )}
@@ -50,8 +50,8 @@ const ToolTipButton: React.FC<ToolTipButtonProps> = ({
       {text && (
         <div
           className={clsx(
-            "absolute top-[calc(100%+5px)] left-[-4px] z-2 rounded-[8px] bg-black p-1 whitespace-nowrap text-white group-hover:block",
-            isClicked ? "block" : "hidden",
+            'absolute top-[calc(100%+5px)] left-[-4px] z-2 rounded-[8px] bg-black p-1 whitespace-nowrap text-white group-hover:block',
+            isClicked ? 'block' : 'hidden',
             "before:absolute before:top-[-10px] before:left-[10px] before:border-[5px] before:border-b-[5px] before:border-solid before:border-transparent before:border-b-black before:content-['']",
           )}
         >

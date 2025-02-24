@@ -1,10 +1,10 @@
-import AudioButton from "@assets/audio.svg";
-import ClearButton from "@assets/clear.svg";
-import CopyButton from "@assets/copy.svg";
-import ToolTipButton from "@components/react/ToolTipButton";
-import clsx from "clsx";
-import React, { useEffect, useState } from "react";
-import styles from "../TextArea.module.css";
+import AudioButton from '@assets/audio.svg';
+import ClearButton from '@assets/clear.svg';
+import CopyButton from '@assets/copy.svg';
+import ToolTipButton from '@components/react/ToolTipButton';
+import clsx from 'clsx';
+import React, { useEffect, useState } from 'react';
+import styles from '../TextArea.module.css';
 
 type OriginTextAreaProps = {
   value: string;
@@ -26,13 +26,13 @@ const OriginTextArea: React.FC<OriginTextAreaProps> = ({
   const [count, setCount] = useState(0);
 
   const handleClear = () => {
-    if (textareaRef.current) textareaRef.current.value = "";
-    handleChange("", true);
+    if (textareaRef.current) textareaRef.current.value = '';
+    handleChange('', true);
     setCount(0);
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(textareaRef.current?.value || "");
+    navigator.clipboard.writeText(textareaRef.current?.value || '');
   };
 
   // const handleAudioPlay = () => {
@@ -44,6 +44,7 @@ const OriginTextArea: React.FC<OriginTextAreaProps> = ({
     setCount(value.length);
   }, [value]);
 
+  // TODO: PCのときは縦幅をもう少し大きくする
   return (
     <div className="w-full">
       <label
@@ -61,7 +62,7 @@ const OriginTextArea: React.FC<OriginTextAreaProps> = ({
           maxLength={maxLength}
           className={clsx(
             styles.textarea,
-            "placeholder:text-gray h-[110px] w-[calc(100%-1px)] resize-none p-2 pr-[20px] focus:outline-none",
+            'placeholder:text-gray h-[110px] w-[calc(100%-1px)] resize-none p-2 pr-[20px] focus:outline-none',
           )}
           value={value}
         />
@@ -87,8 +88,8 @@ const OriginTextArea: React.FC<OriginTextAreaProps> = ({
               className={
                 textareaRef.current &&
                 textareaRef.current.value.length >= maxLength
-                  ? "text-error"
-                  : ""
+                  ? 'text-error'
+                  : ''
               }
             >
               {count}

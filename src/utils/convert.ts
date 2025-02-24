@@ -1,5 +1,5 @@
-import { MOAI_CODE, REVERSED_MOAI_CODE } from "../constants/langCode";
-import { SPECIAL_CHARACTERS_REGEXP } from "../constants/regexp";
+import { MOAI_CODE, REVERSED_MOAI_CODE } from '../constants/langCode';
+import { SPECIAL_CHARACTERS_REGEXP } from '../constants/regexp';
 
 /**
  * コードポイントが有効かどうか
@@ -9,8 +9,8 @@ import { SPECIAL_CHARACTERS_REGEXP } from "../constants/regexp";
 export const isCorrectCodePoint = (codePoint: number) => {
   // see: https://ja.wikipedia.org/wiki/Unicode%E4%B8%80%E8%A6%A7_0000-0FFF
   const controlCharRanges = [
-    { start: "0000", end: "001f" }, // C0 Control Characters
-    { start: "007f", end: "009f" }, // C1 Control Characters
+    { start: '0000', end: '001f' }, // C0 Control Characters
+    { start: '007f', end: '009f' }, // C1 Control Characters
   ];
 
   // コードポイントが制御文字(=無効)かのチェック
@@ -45,7 +45,7 @@ export const originToMoaiLang = (
 } => {
   if (!inputOrigin) {
     return {
-      moai: "",
+      moai: '',
       dividedMoai: [],
       isStartMoai: false,
     };
@@ -55,14 +55,14 @@ export const originToMoaiLang = (
   const originList = inputOrigin.match(/[\s\S]/gu);
   if (!originList) {
     return {
-      moai: "",
+      moai: '',
       dividedMoai: [],
       isStartMoai: false,
     };
   }
 
   const dividedMoaiInfo: { text: string; isMoai: boolean }[] = [];
-  let moai = "";
+  let moai = '';
 
   // dividedMoaiInfo に textを追加する関数
   const textSetter = (text: string, isMoai: boolean) => {
@@ -85,9 +85,9 @@ export const originToMoaiLang = (
       return;
     }
 
-    const array = code.toString(16).split("") as Array<keyof typeof MOAI_CODE>;
+    const array = code.toString(16).split('') as Array<keyof typeof MOAI_CODE>;
 
-    const parsedMoai = "モ" + array.map((code) => MOAI_CODE[code]).join("");
+    const parsedMoai = 'モ' + array.map((code) => MOAI_CODE[code]).join('');
     moai += parsedMoai;
     textSetter(parsedMoai, true);
   });
@@ -113,18 +113,18 @@ export const moaiLangToOrigin = (
 } => {
   if (!inputMoai) {
     return {
-      origin: "",
+      origin: '',
       dividedMoai: [],
       isStartMoai: false,
     };
   }
 
-  const pattern = Object.values(MOAI_CODE).join("|");
-  const moaiRegexp = new RegExp(`モ(${pattern})+`, "g");
-  const moaiCodeRegexp = new RegExp(pattern, "g");
+  const pattern = Object.values(MOAI_CODE).join('|');
+  const moaiRegexp = new RegExp(`モ(${pattern})+`, 'g');
+  const moaiCodeRegexp = new RegExp(pattern, 'g');
 
   const dividedMoaiInfo: { text: string; isMoai: boolean }[] = [];
-  let origin = "";
+  let origin = '';
 
   // dividedMoaiInfo に textを追加する関数
   const textSetter = (text: string, isMoai: boolean) => {
@@ -168,7 +168,7 @@ export const moaiLangToOrigin = (
 
     while (
       unicode.target.length !== 0 &&
-      !isCorrectCodePoint(parseInt(unicode.target.join(""), 16))
+      !isCorrectCodePoint(parseInt(unicode.target.join(''), 16))
     ) {
       const last = unicode.target.pop();
       if (last) unicode.excluded.push(last);
@@ -177,15 +177,15 @@ export const moaiLangToOrigin = (
     // モアイ語として読み取れる前半と、非モアイ語の後半に分ける
     if (unicode.target.length !== 0) {
       const moaiText =
-        "モ" + matchedMoaiArr.slice(0, unicode.target.length).join("");
+        'モ' + matchedMoaiArr.slice(0, unicode.target.length).join('');
       textSetter(moaiText, true);
-      origin += String.fromCodePoint(parseInt(unicode.target.join(""), 16));
+      origin += String.fromCodePoint(parseInt(unicode.target.join(''), 16));
     }
     if (unicode.excluded.length !== 0) {
       // 制御文字の場合(最終的にunicode.target.length === 0となる)は"モ"をつけてそのまま返す
       const notMoaiText =
-        (unicode.target.length === 0 ? "モ" : "") +
-        matchedMoaiArr.slice(unicode.target.length).join("");
+        (unicode.target.length === 0 ? 'モ' : '') +
+        matchedMoaiArr.slice(unicode.target.length).join('');
 
       textSetter(notMoaiText, false);
       origin += notMoaiText;
