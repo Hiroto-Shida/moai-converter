@@ -89,10 +89,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
         );
       }
       return (
-        <span
-          key={index}
-          className="text-error break-words whitespace-pre-wrap"
-        >
+        <span key={index} className="bg-error break-words whitespace-pre-wrap">
           {element}
         </span>
       );
@@ -111,7 +108,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
       >
         {content.textarea.moai.label}
       </label>
-      <div className="bg-secondary relative mt-1 flex h-[150px] flex-col rounded-[8px] has-focus-within:outline-2 has-focus-within:outline-black">
+      <div className="bg-secondary relative mt-1 flex h-[150px] flex-col rounded-[8px] has-focus-within:outline-2 has-focus-within:outline-black md:h-[200px]">
         <img
           src={MoaiStroke.src}
           alt=""
@@ -125,7 +122,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
           maxLength={maxLength}
           className={clsx(
             styles.textarea,
-            'placeholder:text-gray absolute h-[110px] w-[calc(100%-1px)] flex-1 resize-none p-2 pr-[20px] break-words whitespace-pre-wrap focus:outline-none',
+            'placeholder:text-gray absolute h-[110px] w-full resize-none p-2 pr-[28px] break-words whitespace-pre-wrap focus:outline-none md:h-[160px]',
             'z-2 bg-transparent text-transparent caret-black',
           )}
           value={value}
@@ -134,7 +131,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
           ref={displayAreaRef}
           className={clsx(
             styles.display,
-            'z-1 box-border h-[110px] w-[calc(100%-1px)] overflow-y-scroll p-2 pr-[20px] break-words whitespace-pre-wrap',
+            'z-1 box-border w-full flex-1 overflow-y-scroll p-2 pr-[28px] break-words whitespace-pre-wrap',
           )}
         >
           {styledMoaiLang}
@@ -176,9 +173,19 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
       </div>
       {(moaiInfo.dividedMoai.length >= 2 ||
         (moaiInfo.dividedMoai.length === 1 && !moaiInfo.isStartMoai)) && (
-        <div className="text-error mt-1 flex">
+        <div className="mt-1 flex">
           <div>※</div>
-          <p className="ml-[2px]">{content.textarea.error}</p>
+          <p className="ml-[2px]">
+            {content.textarea.error
+              .split(',')
+              .map((text, i) =>
+                i === 0 ? (
+                  <span className="bg-error">{text}</span>
+                ) : (
+                  <span>{text}</span>
+                ),
+              )}
+          </p>
         </div>
       )}
     </div>

@@ -20,7 +20,7 @@ textarea:
     copy:
       hover: 'Copy to Clipboard'
       clicked: 'Copied!'
-  error: 'Non-Moai Language (including some special characters) will not be converted.'
+  error: 'Non-Moai Language (including some special characters), will not be converted.'
 footer:
   GitHub: 'GitHub'
 ---

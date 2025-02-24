@@ -1,1 +1,25 @@
-<meta http-equiv="refresh" content="0;url=/ja/" />
+---
+import Converter from '@components/react/Converter';
+import LanguageMenu from '@components/react/LanguageMenu';
+import Title from '@components/Title/Title.astro';
+import { getCollection } from 'astro:content';
+import type { LangType } from 'src/types/lang';
+import type { ContentType } from 'src/types/translations';
+import Layout from '../layouts/Layout.astro';
+
+const content = (await getCollection('homepage')).reduce(
+  (acc, entry) => {
+    acc[entry.slug as LangType] = entry.data;
+    return acc;
+  },
+  {} as Record<LangType, ContentType>,
+)['ja'];
+---
+
+<Layout lang={'ja'} content={content}>
+  <div class="flex flex-col items-center justify-center gap-4">
+    <LanguageMenu content={content} client:load />
+    <Title content={content} />
+    <Converter content={content} client:load />
+  </div>
+</Layout>

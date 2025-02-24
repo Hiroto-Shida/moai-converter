@@ -34,6 +34,6 @@ jobs:
       - name: node moduleのインストール
         run: npm ci
 
-      # vite build
-      - name: vite の build
+      # npm build
+      - name: npm の build
         run: npm run build

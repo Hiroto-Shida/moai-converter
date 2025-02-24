@@ -1,13 +1,12 @@
 @import 'tailwindcss';
 
-/* TODO: errorがすこし見づらいので色調整 */
 @theme {
   --color-primary: #04bf78;
   --color-secondary: #e6fef6;
   --color-black: #022115;
   --color-white: #ffffff;
   --color-gray: #a0b6ae;
-  --color-error: #bf1404;
+  --color-error: #fed1cd;
   --text-base: 16px;
   --text-base--line-height: 140%;
   --text-small: 12px;
