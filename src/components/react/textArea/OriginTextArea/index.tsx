@@ -52,7 +52,7 @@ const OriginTextArea: React.FC<OriginTextAreaProps> = ({
       >
         {content.textarea.origin.label}
       </label>
-      <div className="relative mt-1 flex h-[150px] flex-col rounded-[8px] bg-white has-focus-within:outline-2 has-focus-within:outline-black">
+      <div className="relative mt-1 flex h-[150px] flex-col rounded-[8px] bg-white has-focus-within:outline-2 has-focus-within:outline-black md:h-[200px]">
         <textarea
           id={`origin_textarea`}
           ref={textareaRef}
@@ -61,7 +61,7 @@ const OriginTextArea: React.FC<OriginTextAreaProps> = ({
           maxLength={maxLength}
           className={clsx(
             styles.textarea,
-            'placeholder:text-gray h-[110px] w-full resize-none p-2 pr-[28px] focus:outline-none',
+            'placeholder:text-gray w-full flex-1 resize-none p-2 pr-[28px] focus:outline-none',
           )}
           value={value}
         />
