@@ -125,7 +125,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
           maxLength={maxLength}
           className={clsx(
             styles.textarea,
-            'placeholder:text-gray absolute h-[110px] w-[calc(100%-1px)] flex-1 resize-none p-2 pr-[28px] break-words whitespace-pre-wrap focus:outline-none',
+            'placeholder:text-gray absolute h-[110px] w-full flex-1 resize-none p-2 pr-[28px] break-words whitespace-pre-wrap focus:outline-none',
             'z-2 bg-transparent text-transparent caret-black',
           )}
           value={value}
@@ -134,7 +134,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
           ref={displayAreaRef}
           className={clsx(
             styles.display,
-            'z-1 box-border h-[110px] w-[calc(100%-1px)] overflow-y-scroll p-2 pr-[28px] break-words whitespace-pre-wrap',
+            'z-1 box-border h-[110px] w-full overflow-y-scroll p-2 pr-[28px] break-words whitespace-pre-wrap',
           )}
         >
           {styledMoaiLang}
