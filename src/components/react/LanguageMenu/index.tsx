@@ -9,7 +9,6 @@ type LanguageMenuProps = {
 const LanguageMenu: React.FC<LanguageMenuProps> = ({ content }) => {
   return (
     <div className="w-full">
-      {/* TODO: 言語切り替え機能を実装 */}
       <div className="m-0 ml-auto size-[20px]">
         <Menu>
           <MenuButton>

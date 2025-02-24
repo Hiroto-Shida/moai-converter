@@ -43,7 +43,6 @@ const OriginTextArea: React.FC<OriginTextAreaProps> = ({
     setCount(value.length);
   }, [value]);
 
-  // TODO: PCのときは縦幅をもう少し大きくする
   return (
     <div className="w-full">
       <label
