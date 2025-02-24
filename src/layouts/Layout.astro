@@ -1,24 +1,33 @@
 ---
 import Footer from '@components/Footer/Footer.astro';
+import type { LangType } from 'src/types/lang';
+import type { ContentType } from 'src/types/translations';
 import '../styles/global.css';
+
+interface Props {
+  lang: LangType;
+  content: ContentType;
+}
+
+const { lang, content } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang === 'en' ? 'en' : 'ja'}>
   <head>
+    <!-- TODO: OGP設定 -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <!-- TODO: favicon設定 -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Moai Converter</title>
+    <title>{content.title}</title>
   </head>
   <body class="bg-primary flex min-h-dvh flex-col p-6 text-base text-black">
     <main>
       <slot />
     </main>
     <div class="flex-grow"></div>
-    <Footer />
+    <Footer content={content} />
   </body>
 </html>
 

@@ -1,0 +1,13 @@
+---
+import type { ContentType } from 'src/types/translations';
+
+interface Props {
+  content: ContentType;
+}
+
+const { content } = Astro.props;
+---
+
+<div class="flex min-h-20 items-center">
+  <h1 class="text-large text-center font-bold text-white">{content.title}</h1>
+</div>

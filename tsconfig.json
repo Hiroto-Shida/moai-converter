@@ -11,7 +11,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    // "verbatimModuleSyntax": true,
+    "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
       // "@/*": ["./src/*"] // なぜか全体指定だとうまくいかないので個々に書くことにした↓
