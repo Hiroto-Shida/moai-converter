@@ -20,7 +20,7 @@ textarea:
     copy:
       hover: 'クリップボードにコピー'
       clicked: 'コピーされました！'
-  error: 'モアイ語以外(特殊文字等を含む)は変換されません'
+  error: 'モアイ語以外(特殊文字等を含む),は変換されません'
 footer:
   GitHub: 'GitHub'
 ---
