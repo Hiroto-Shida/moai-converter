@@ -10,16 +10,23 @@ interface Props {
 }
 
 const { lang, content } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, import.meta.env.SITE_URL);
+const imagePath =
+  lang === 'ja'
+    ? '/ogp_japanese.png'
+    : lang === 'en'
+      ? '/ogp_english.png'
+      : '/ogp_moai.png';
+const ogpImageURL = new URL(imagePath, canonicalURL);
 ---
 
 <!doctype html>
 <html lang={lang === 'en' ? 'en' : 'ja'}>
   <head>
-    <!-- TODO: OGP設定 -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <meta property="og:image" content={ogpImageURL} />
     <title>{content.title}</title>
   </head>
   <body class="bg-primary flex min-h-dvh flex-col p-6 text-base text-black">
