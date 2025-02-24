@@ -1,5 +1,12 @@
 ---
 import GithubIcon from '@assets/github.svg';
+import type { ContentType } from 'src/types/translations';
+
+interface Props {
+  content: ContentType;
+}
+
+const { content } = Astro.props;
 ---
 
 <footer class="flex w-full justify-center">
@@ -9,6 +16,6 @@ import GithubIcon from '@assets/github.svg';
     class="flex w-fit duration-200 ease-in-out hover:opacity-70"
   >
     <img src={GithubIcon.src} alt="" class="size-[23px]" />
-    <p class="ml-1 text-white">GitHub</p>
+    <p class="ml-1 text-white">{content.footer.GitHub}</p>
   </a>
 </footer>

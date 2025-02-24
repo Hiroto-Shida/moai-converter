@@ -1,0 +1,33 @@
+---
+import Converter from '@components/react/Converter';
+import LanguageMenu from '@components/react/LanguageMenu';
+import Title from '@components/Title/Title.astro';
+import { LANG } from '@constants/lang';
+import { getCollection } from 'astro:content';
+import type { LangType } from 'src/types/lang';
+import type { ContentType } from 'src/types/translations';
+import Layout from '../layouts/Layout.astro';
+
+export const getStaticPaths = () => {
+  return Object.values(LANG).map((lang) => ({
+    params: { lang },
+  }));
+};
+const { lang } = Astro.params;
+
+const content = (await getCollection('homepage')).reduce(
+  (acc, entry) => {
+    acc[entry.slug as LangType] = entry.data;
+    return acc;
+  },
+  {} as Record<LangType, ContentType>,
+)[lang];
+---
+
+<Layout lang={lang} content={content}>
+  <div class="flex flex-col items-center justify-center gap-4">
+    <LanguageMenu content={content} client:load />
+    <Title content={content} />
+    <Converter content={content} client:load />
+  </div>
+</Layout>

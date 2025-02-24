@@ -4,22 +4,21 @@ import CopyButton from '@assets/copy.svg';
 import ToolTipButton from '@components/react/ToolTipButton';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
+import type { ContentType } from 'src/types/translations';
 import styles from '../TextArea.module.css';
 
 type OriginTextAreaProps = {
   value: string;
-  label: string;
+  content: ContentType;
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
-  placeholder: string;
   maxLength: number;
   handleChange: (value: string, fromClear?: boolean) => void;
 };
 
 const OriginTextArea: React.FC<OriginTextAreaProps> = ({
   value,
-  label,
+  content,
   textareaRef,
-  placeholder,
   maxLength,
   handleChange,
 }) => {
@@ -51,13 +50,13 @@ const OriginTextArea: React.FC<OriginTextAreaProps> = ({
         htmlFor={`origin_textarea`}
         className="block w-fit font-bold text-white"
       >
-        {label}
+        {content.textarea.origin.label}
       </label>
       <div className="relative mt-1 flex h-[150px] flex-col rounded-[8px] bg-white has-focus-within:outline-2 has-focus-within:outline-black">
         <textarea
           id={`origin_textarea`}
           ref={textareaRef}
-          placeholder={placeholder}
+          placeholder={content.textarea.origin.placeholder}
           onChange={(event) => handleChange(event.target.value)}
           maxLength={maxLength}
           className={clsx(
@@ -77,9 +76,9 @@ const OriginTextArea: React.FC<OriginTextAreaProps> = ({
             <img src={AudioButton.src} alt="" className="size-[20px]" />
           </ToolTipButton>
           <ToolTipButton
-            text="Copy to Clipboard"
+            text={content.textarea.origin.copy.hover}
             onClick={handleCopy}
-            clickedText="Copied!"
+            clickedText={content.textarea.origin.copy.clicked}
           >
             <img src={CopyButton.src} alt="" className="size-[20px]" />
           </ToolTipButton>

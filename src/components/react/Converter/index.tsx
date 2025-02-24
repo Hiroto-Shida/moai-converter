@@ -1,9 +1,14 @@
 import { moaiLangToOrigin, originToMoaiLang } from '@utils/convert';
 import React, { useRef, useState } from 'react';
+import type { ContentType } from 'src/types/translations';
 import MoaiTextArea from '../textArea/MoaiTextArea';
 import OriginTextArea from '../textArea/OriginTextArea';
 
-const Converter: React.FC = () => {
+type ConverterProps = {
+  content: ContentType;
+};
+
+const Converter: React.FC<ConverterProps> = ({ content }) => {
   const originTextAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const moaiTextAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const displayAreaRef = useRef<HTMLDivElement | null>(null);
@@ -64,9 +69,8 @@ const Converter: React.FC = () => {
     <div className="relative flex w-full flex-col gap-4 md:flex-row">
       <OriginTextArea
         value={originValue}
-        label="Your language"
+        content={content}
         textareaRef={originTextAreaRef}
-        placeholder="hello"
         maxLength={200}
         handleChange={(value, fromClear) =>
           handleChange(value, 'origin', fromClear)
@@ -74,9 +78,8 @@ const Converter: React.FC = () => {
       />
       <MoaiTextArea
         value={moaiValue}
-        label="Moai language"
+        content={content}
         textareaRef={moaiTextAreaRef}
-        placeholder="モﾓｱｱモﾓｱォモﾓｱｵモﾓｱｵモﾓｱﾓｨ"
         maxLength={1000}
         handleChange={(value, fromClear) =>
           handleChange(value, 'moai', fromClear)

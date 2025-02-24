@@ -6,13 +6,13 @@ import ToolTipButton from '@components/react/ToolTipButton';
 import { moaiLangToOrigin } from '@utils/convert';
 import clsx from 'clsx';
 import React, { useEffect, useMemo, useState } from 'react';
+import type { ContentType } from 'src/types/translations';
 import styles from '../TextArea.module.css';
 
 type MoaiTextAreaProps = {
   value: string;
-  label: string;
+  content: ContentType;
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
-  placeholder: string;
   maxLength: number;
   handleChange: (value: string, fromClear?: boolean) => void;
   displayAreaRef: React.RefObject<HTMLDivElement | null>;
@@ -21,9 +21,8 @@ type MoaiTextAreaProps = {
 
 const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
   value,
-  label,
+  content,
   textareaRef,
-  placeholder,
   maxLength,
   handleChange,
   displayAreaRef,
@@ -45,7 +44,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
     if (!textareaRef.current?.value) return;
 
     // 確認ダイアログを表示して音声を再生するか確認する
-    if (!window.confirm('play audio?')) return;
+    if (!window.confirm(content.textarea.moai.audio.dialog)) return;
 
     const utterance = new SpeechSynthesisUtterance(textareaRef.current.value);
     utterance.lang = 'ja-JP';
@@ -110,7 +109,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
         htmlFor={`moai_textarea`}
         className="block w-fit font-bold text-white"
       >
-        {label}
+        {content.textarea.moai.label}
       </label>
       <div className="bg-secondary relative mt-1 flex h-[150px] flex-col rounded-[8px] has-focus-within:outline-2 has-focus-within:outline-black">
         <img
@@ -121,7 +120,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
         <textarea
           id={`moai_textarea`}
           ref={textareaRef}
-          placeholder={placeholder}
+          placeholder={content.textarea.moai.placeholder}
           onChange={(event) => handleChange(event.target.value)}
           maxLength={maxLength}
           className={clsx(
@@ -147,13 +146,16 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
           onClick={handleClear}
         />
         <div className="z-2 my-2 flex h-[24px] items-center gap-4 px-2">
-          <ToolTipButton text="Audio Play" onClick={handleAudioPlay}>
+          <ToolTipButton
+            text={content.textarea.moai.audio.hover}
+            onClick={handleAudioPlay}
+          >
             <img src={AudioButton.src} alt="" className="size-[20px]" />
           </ToolTipButton>
           <ToolTipButton
-            text="Copy to Clipboard"
+            text={content.textarea.moai.copy.hover}
             onClick={handleCopy}
-            clickedText="Copied!"
+            clickedText={content.textarea.moai.copy.clicked}
           >
             <img src={CopyButton.src} alt="" className="size-[20px]" />
           </ToolTipButton>
@@ -176,10 +178,7 @@ const MoaiTextArea: React.FC<MoaiTextAreaProps> = ({
         (moaiInfo.dividedMoai.length === 1 && !moaiInfo.isStartMoai)) && (
         <div className="text-error mt-1 flex">
           <div>※</div>
-          <p className="ml-[2px]">
-            Non-Moai Language (including some special characters) will not be
-            converted.
-          </p>
+          <p className="ml-[2px]">{content.textarea.error}</p>
         </div>
       )}
     </div>
