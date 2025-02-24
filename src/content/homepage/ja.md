@@ -1,4 +1,7 @@
 ---
+meta:
+  title: 'モアイ語変換'
+  description: 'どんな言語もモアイ語に変換します'
 title: 'モアイ語変換'
 languageMenu:
   english: '英語'
